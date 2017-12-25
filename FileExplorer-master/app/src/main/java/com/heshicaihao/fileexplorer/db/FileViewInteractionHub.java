@@ -359,7 +359,7 @@ public class FileViewInteractionHub implements IOperationProgressListener {
                 if (end == -1)
                     break;
 
-                View listItem = LayoutInflater.from(mContext).inflate(R.layout.dropdown_item,
+                View listItem = LayoutInflater.from(mContext).inflate(R.layout.item_dropdown,
                         null);
 
                 View listContent = listItem.findViewById(R.id.list_item);

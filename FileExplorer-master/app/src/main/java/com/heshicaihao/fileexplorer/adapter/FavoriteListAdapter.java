@@ -54,7 +54,7 @@ public class FavoriteListAdapter extends ArrayAdapter<FavoriteBean> {
         if (convertView != null) {
             view = convertView;
         } else {
-            view = mInflater.inflate(R.layout.favorite_item, parent, false);
+            view = mInflater.inflate(R.layout.item_favorite, parent, false);
         }
 
         FavoriteBean item = getItem(position);

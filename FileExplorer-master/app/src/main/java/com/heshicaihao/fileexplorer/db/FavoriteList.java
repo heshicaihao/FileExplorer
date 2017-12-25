@@ -50,7 +50,7 @@ public class FavoriteList implements FavoriteDatabaseListener {
         mContext = context;
 
         mFavoriteDatabase = new FavoriteDatabaseHelper(context, this);
-        mFavoriteListAdapter = new FavoriteListAdapter(context, R.layout.favorite_item,
+        mFavoriteListAdapter = new FavoriteListAdapter(context, R.layout.item_favorite,
                 mFavoriteList, iconHelper);
         setupFavoriteListView(list);
         mListener = listener;

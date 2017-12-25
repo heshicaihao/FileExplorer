@@ -162,7 +162,7 @@ public class FileViewFragment extends Fragment implements
 
         mFileListView = (ListView) mRootView.findViewById(R.id.file_path_list);
         mFileIconHelper = new FileIconHelper(mActivity);
-        mAdapter = new FileListAdapter(mActivity, R.layout.file_browser_item, mFileNameList, mFileViewInteractionHub,
+        mAdapter = new FileListAdapter(mActivity, R.layout.item_file_browser, mFileNameList, mFileViewInteractionHub,
                 mFileIconHelper);
 
         boolean baseSd = intent.getBooleanExtra(GlobalConsts.KEY_BASE_SD, !FileExplorerPreferenceActivity.isReadRoot(mActivity));

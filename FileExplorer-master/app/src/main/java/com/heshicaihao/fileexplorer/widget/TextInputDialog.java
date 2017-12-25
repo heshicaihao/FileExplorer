@@ -56,7 +56,7 @@ public class TextInputDialog extends AlertDialog {
     }
 
     protected void onCreate(Bundle savedInstanceState) {
-        mView = getLayoutInflater().inflate(R.layout.textinput_dialog, null);
+        mView = getLayoutInflater().inflate(R.layout.view_dialog_text_input, null);
 
         setTitle(mTitle);
         setMessage(mMsg);

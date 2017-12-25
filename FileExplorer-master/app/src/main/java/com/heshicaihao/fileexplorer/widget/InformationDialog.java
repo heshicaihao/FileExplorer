@@ -51,7 +51,7 @@ public class InformationDialog extends AlertDialog {
     }
 
     protected void onCreate(Bundle savedInstanceState) {
-        mView = getLayoutInflater().inflate(R.layout.information_dialog, null);
+        mView = getLayoutInflater().inflate(R.layout.view_dialog_information, null);
 
         if (mFileInfo.IsDir) {
             setIcon(R.drawable.folder);

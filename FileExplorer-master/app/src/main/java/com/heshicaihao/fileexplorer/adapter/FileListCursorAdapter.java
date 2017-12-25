@@ -78,7 +78,7 @@ public class FileListCursorAdapter extends CursorAdapter {
 
     @Override
     public View newView(Context context, Cursor cursor, ViewGroup parent) {
-        return mFactory.inflate(R.layout.category_file_browser_item, parent, false);
+        return mFactory.inflate(R.layout.item_category_file_browser, parent, false);
     }
 
     @Override

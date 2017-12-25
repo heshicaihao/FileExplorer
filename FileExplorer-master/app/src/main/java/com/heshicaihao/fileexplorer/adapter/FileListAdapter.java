@@ -58,7 +58,7 @@ public class FileListAdapter extends ArrayAdapter<FileInfoBean> {
         if (convertView != null) {
             view = convertView;
         } else {
-            view = mInflater.inflate(R.layout.file_browser_item, parent, false);
+            view = mInflater.inflate(R.layout.item_file_browser, parent, false);
         }
 
         FileInfoBean lFileInfo = mFileViewInteractionHub.getItem(position);
