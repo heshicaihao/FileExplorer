@@ -24,7 +24,7 @@ import android.content.Intent;
 import android.view.View;
 
 import com.heshicaihao.fileexplorer.helper.FileIconHelper;
-import com.heshicaihao.fileexplorer.bean.FileInfo;
+import com.heshicaihao.fileexplorer.bean.FileInfoBean;
 import com.heshicaihao.fileexplorer.helper.FileSortHelper;
 
 import java.util.Collection;
@@ -39,7 +39,7 @@ public interface IFileInteractionListener {
 
     public void onDataChanged();
 
-    public void onPick(FileInfo f);
+    public void onPick(FileInfoBean f);
 
     public boolean shouldShowOperationPane();
 
@@ -63,13 +63,13 @@ public interface IFileInteractionListener {
 
     public FileIconHelper getFileIconHelper();
 
-    public FileInfo getItem(int pos);
+    public FileInfoBean getItem(int pos);
 
     public void sortCurrentList(FileSortHelper sort);
 
-    public Collection<FileInfo> getAllFiles();
+    public Collection<FileInfoBean> getAllFiles();
 
-    public void addSingleFile(FileInfo file);
+    public void addSingleFile(FileInfoBean file);
 
     public boolean onRefreshFileList(String path, FileSortHelper sort);
 

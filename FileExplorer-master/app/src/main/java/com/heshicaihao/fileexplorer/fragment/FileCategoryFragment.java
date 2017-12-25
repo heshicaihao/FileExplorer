@@ -29,7 +29,7 @@ import com.heshicaihao.fileexplorer.helper.FileCategoryHelper.FileCategory;
 import com.heshicaihao.fileexplorer.MainActivity;
 import com.heshicaihao.fileexplorer.MainActivity.IBackPressedListener;
 import com.heshicaihao.fileexplorer.helper.FileIconHelper;
-import com.heshicaihao.fileexplorer.bean.FileInfo;
+import com.heshicaihao.fileexplorer.bean.FileInfoBean;
 import com.heshicaihao.fileexplorer.adapter.FileListCursorAdapter;
 import com.heshicaihao.fileexplorer.helper.FileSortHelper;
 import com.heshicaihao.fileexplorer.db.FileViewInteractionHub;
@@ -369,7 +369,7 @@ public class FileCategoryFragment extends Fragment implements IFileInteractionLi
     }
 
     @Override
-    public void onPick(FileInfo f) {
+    public void onPick(FileInfoBean f) {
         // do nothing
     }
 
@@ -425,17 +425,17 @@ public class FileCategoryFragment extends Fragment implements IFileInteractionLi
     }
 
     @Override
-    public void addSingleFile(FileInfo file) {
+    public void addSingleFile(FileInfoBean file) {
         refreshList();
     }
 
     @Override
-    public Collection<FileInfo> getAllFiles() {
+    public Collection<FileInfoBean> getAllFiles() {
         return mAdapter.getAllFiles();
     }
 
     @Override
-    public FileInfo getItem(int pos) {
+    public FileInfoBean getItem(int pos) {
         return mAdapter.getFileItem(pos);
     }
 
@@ -453,13 +453,13 @@ public class FileCategoryFragment extends Fragment implements IFileInteractionLi
         mFileViewInteractionHub.refreshFileList();
     }
 
-    private void copyFileInFileView(ArrayList<FileInfo> files) {
+    private void copyFileInFileView(ArrayList<FileInfoBean> files) {
         if (files.size() == 0) return;
         mFileViewFragment.copyFile(files);
         mActivity.getActionBar().setSelectedNavigationItem(Util.SDCARD_TAB_INDEX);
     }
 
-    private void startMoveToFileView(ArrayList<FileInfo> files) {
+    private void startMoveToFileView(ArrayList<FileInfoBean> files) {
         if (files.size() == 0) return;
         mFileViewFragment.moveToFile(files);
         mActivity.getActionBar().setSelectedNavigationItem(Util.SDCARD_TAB_INDEX);

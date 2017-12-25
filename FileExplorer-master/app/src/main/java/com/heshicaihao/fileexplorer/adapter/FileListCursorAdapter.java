@@ -30,7 +30,7 @@ import com.heshicaihao.fileexplorer.helper.FileCategoryHelper;
 import com.heshicaihao.fileexplorer.helper.FileIconHelper;
 import com.heshicaihao.fileexplorer.helper.FileListItem;
 import com.heshicaihao.fileexplorer.R;
-import com.heshicaihao.fileexplorer.bean.FileInfo;
+import com.heshicaihao.fileexplorer.bean.FileInfoBean;
 import com.heshicaihao.fileexplorer.db.FileViewInteractionHub;
 import com.heshicaihao.fileexplorer.utils.Util;
 
@@ -45,7 +45,7 @@ public class FileListCursorAdapter extends CursorAdapter {
 
     private FileIconHelper mFileIcon;
 
-    private HashMap<Integer, FileInfo> mFileNameList = new HashMap<Integer, FileInfo>();
+    private HashMap<Integer, FileInfoBean> mFileNameList = new HashMap<Integer, FileInfoBean>();
 
     private Context mContext;
 
@@ -60,10 +60,10 @@ public class FileListCursorAdapter extends CursorAdapter {
 
     @Override
     public void bindView(View view, Context context, Cursor cursor) {
-        FileInfo fileInfo = getFileItem(cursor.getPosition());
+        FileInfoBean fileInfo = getFileItem(cursor.getPosition());
         if (fileInfo == null) {
             // file is not existing, create a fake info
-            fileInfo = new FileInfo();
+            fileInfo = new FileInfoBean();
             fileInfo.dbId = cursor.getLong(FileCategoryHelper.COLUMN_ID);
             fileInfo.filePath = cursor.getString(FileCategoryHelper.COLUMN_PATH);
             fileInfo.fileName = Util.getNameFromFilepath(fileInfo.filePath);
@@ -87,7 +87,7 @@ public class FileListCursorAdapter extends CursorAdapter {
         super.changeCursor(cursor);
     }
 
-    public Collection<FileInfo> getAllFiles() {
+    public Collection<FileInfoBean> getAllFiles() {
         if (mFileNameList.size() == getCount())
             return mFileNameList.values();
 
@@ -97,7 +97,7 @@ public class FileListCursorAdapter extends CursorAdapter {
                 Integer position = Integer.valueOf(cursor.getPosition());
                 if (mFileNameList.containsKey(position))
                     continue;
-                FileInfo fileInfo = getFileInfo(cursor);
+                FileInfoBean fileInfo = getFileInfo(cursor);
                 if (fileInfo != null) {
                     mFileNameList.put(position, fileInfo);
                 }
@@ -107,13 +107,13 @@ public class FileListCursorAdapter extends CursorAdapter {
         return mFileNameList.values();
     }
 
-    public FileInfo getFileItem(int pos) {
+    public FileInfoBean getFileItem(int pos) {
         Integer position = Integer.valueOf(pos);
         if (mFileNameList.containsKey(position))
             return mFileNameList.get(position);
 
         Cursor cursor = (Cursor) getItem(pos);
-        FileInfo fileInfo = getFileInfo(cursor);
+        FileInfoBean fileInfo = getFileInfo(cursor);
         if (fileInfo == null)
             return null;
 
@@ -122,7 +122,7 @@ public class FileListCursorAdapter extends CursorAdapter {
         return fileInfo;
     }
 
-    private FileInfo getFileInfo(Cursor cursor) {
+    private FileInfoBean getFileInfo(Cursor cursor) {
         return (cursor == null || cursor.getCount() == 0) ? null : Util
                 .GetFileInfo(cursor.getString(FileCategoryHelper.COLUMN_PATH));
     }

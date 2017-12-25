@@ -48,7 +48,7 @@ import com.heshicaihao.fileexplorer.MainActivity;
 import com.heshicaihao.fileexplorer.common.ActivitiesManager;
 import com.heshicaihao.fileexplorer.helper.FileCategoryHelper;
 import com.heshicaihao.fileexplorer.helper.FileIconHelper;
-import com.heshicaihao.fileexplorer.bean.FileInfo;
+import com.heshicaihao.fileexplorer.bean.FileInfoBean;
 import com.heshicaihao.fileexplorer.helper.FileSortHelper;
 import com.heshicaihao.fileexplorer.db.FileViewInteractionHub;
 import com.heshicaihao.fileexplorer.db.FileViewInteractionHub.Mode;
@@ -75,7 +75,7 @@ public class FileViewFragment extends Fragment implements
     private ListView mFileListView;
 
     // private TextView mCurrentPathTextView;
-    private ArrayAdapter<FileInfo> mAdapter;
+    private ArrayAdapter<FileInfoBean> mAdapter;
 
     private FileViewInteractionHub mFileViewInteractionHub;
 
@@ -83,7 +83,7 @@ public class FileViewFragment extends Fragment implements
 
     private FileIconHelper mFileIconHelper;
 
-    private ArrayList<FileInfo> mFileNameList = new ArrayList<FileInfo>();
+    private ArrayList<FileInfoBean> mFileNameList = new ArrayList<FileInfoBean>();
 
     private Activity mActivity;
 
@@ -289,7 +289,7 @@ public class FileViewFragment extends Fragment implements
             return false;
         }
         final int pos = computeScrollPosition(path);
-        ArrayList<FileInfo> fileList = mFileNameList;
+        ArrayList<FileInfoBean> fileList = mFileNameList;
         fileList.clear();
 
         File[] listFiles = file.listFiles(mFileCagetoryHelper.getFilter());
@@ -303,7 +303,7 @@ public class FileViewFragment extends Fragment implements
 
             String absolutePath = child.getAbsolutePath();
             if (Util.isNormalFile(absolutePath) && Util.shouldShowFile(absolutePath)) {
-                FileInfo lFileInfo = Util.GetFileInfo(child,
+                FileInfoBean lFileInfo = Util.GetFileInfo(child,
                         mFileCagetoryHelper.getFilter(), Settings.instance().getShowDotAndHiddenFiles());
                 if (lFileInfo != null) {
                     fileList.add(lFileInfo);
@@ -365,7 +365,7 @@ public class FileViewFragment extends Fragment implements
     }
 
     @Override
-    public void onPick(FileInfo f) {
+    public void onPick(FileInfoBean f) {
         try {
             Intent intent = Intent.parseUri(Uri.fromFile(new File(f.filePath)).toString(), 0);
             mActivity.setResult(Activity.RESULT_OK, intent);
@@ -416,7 +416,7 @@ public class FileViewFragment extends Fragment implements
         return false;
     }
 
-    public void copyFile(ArrayList<FileInfo> files) {
+    public void copyFile(ArrayList<FileInfoBean> files) {
         mFileViewInteractionHub.onOperationCopy(files);
     }
 
@@ -426,13 +426,13 @@ public class FileViewFragment extends Fragment implements
         }
     }
 
-    public void moveToFile(ArrayList<FileInfo> files) {
+    public void moveToFile(ArrayList<FileInfoBean> files) {
         mFileViewInteractionHub.moveFileFrom(files);
     }
 
     public interface SelectFilesCallback {
         // files equals null indicates canceled
-        void selected(ArrayList<FileInfo> files);
+        void selected(ArrayList<FileInfoBean> files);
     }
 
     public void startSelectFiles(SelectFilesCallback callback) {
@@ -454,7 +454,7 @@ public class FileViewFragment extends Fragment implements
     }
 
     @Override
-    public FileInfo getItem(int pos) {
+    public FileInfoBean getItem(int pos) {
         if (pos < 0 || pos > mFileNameList.size() - 1)
             return null;
 
@@ -469,12 +469,12 @@ public class FileViewFragment extends Fragment implements
     }
 
     @Override
-    public ArrayList<FileInfo> getAllFiles() {
+    public ArrayList<FileInfoBean> getAllFiles() {
         return mFileNameList;
     }
 
     @Override
-    public void addSingleFile(FileInfo file) {
+    public void addSingleFile(FileInfoBean file) {
         mFileNameList.add(file);
         onDataChanged();
     }

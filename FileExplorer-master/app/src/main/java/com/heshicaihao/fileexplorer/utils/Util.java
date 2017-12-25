@@ -35,8 +35,8 @@ import android.view.ActionMode;
 import android.view.View;
 import android.widget.TextView;
 
-import com.heshicaihao.fileexplorer.bean.FavoriteItem;
-import com.heshicaihao.fileexplorer.bean.FileInfo;
+import com.heshicaihao.fileexplorer.bean.FavoriteBean;
+import com.heshicaihao.fileexplorer.bean.FileInfoBean;
 import com.heshicaihao.fileexplorer.constants.GlobalConsts;
 import com.heshicaihao.fileexplorer.R;
 import com.heshicaihao.fileexplorer.common.Settings;
@@ -92,12 +92,12 @@ public class Util {
         return !fullName.equals(ANDROID_SECURE);
     }
 
-    public static FileInfo GetFileInfo(String filePath) {
+    public static FileInfoBean GetFileInfo(String filePath) {
         File lFile = new File(filePath);
         if (!lFile.exists())
             return null;
 
-        FileInfo lFileInfo = new FileInfo();
+        FileInfoBean lFileInfo = new FileInfoBean();
         lFileInfo.canRead = lFile.canRead();
         lFileInfo.canWrite = lFile.canWrite();
         lFileInfo.isHidden = lFile.isHidden();
@@ -109,8 +109,8 @@ public class Util {
         return lFileInfo;
     }
 
-    public static FileInfo GetFileInfo(File f, FilenameFilter filter, boolean showHidden) {
-        FileInfo lFileInfo = new FileInfo();
+    public static FileInfoBean GetFileInfo(File f, FilenameFilter filter, boolean showHidden) {
+        FileInfoBean lFileInfo = new FileInfoBean();
         String filePath = f.getPath();
         File lFile = new File(filePath);
         lFileInfo.canRead = lFile.canRead();
@@ -288,13 +288,13 @@ public class Util {
         return true;
     }
 
-    public static ArrayList<FavoriteItem> getDefaultFavorites(Context context) {
-        ArrayList<FavoriteItem> list = new ArrayList<FavoriteItem>();
-        list.add(new FavoriteItem(context.getString(R.string.favorite_photo), makePath(getSdDirectory(), "DCIM/Camera")));
-        list.add(new FavoriteItem(context.getString(R.string.favorite_sdcard), getSdDirectory()));
-        //list.add(new FavoriteItem(context.getString(R.string.favorite_root), getSdDirectory()));
-        list.add(new FavoriteItem(context.getString(R.string.favorite_screen_cap), makePath(getSdDirectory(), "MIUI/screen_cap")));
-        list.add(new FavoriteItem(context.getString(R.string.favorite_ringtone), makePath(getSdDirectory(), "MIUI/ringtone")));
+    public static ArrayList<FavoriteBean> getDefaultFavorites(Context context) {
+        ArrayList<FavoriteBean> list = new ArrayList<FavoriteBean>();
+        list.add(new FavoriteBean(context.getString(R.string.favorite_photo), makePath(getSdDirectory(), "DCIM/Camera")));
+        list.add(new FavoriteBean(context.getString(R.string.favorite_sdcard), getSdDirectory()));
+        //list.add(new FavoriteBean(context.getString(R.string.favorite_root), getSdDirectory()));
+        list.add(new FavoriteBean(context.getString(R.string.favorite_screen_cap), makePath(getSdDirectory(), "MIUI/screen_cap")));
+        list.add(new FavoriteBean(context.getString(R.string.favorite_ringtone), makePath(getSdDirectory(), "MIUI/ringtone")));
         return list;
     }
 

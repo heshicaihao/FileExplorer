@@ -70,7 +70,7 @@ import com.heshicaihao.fileexplorer.widget.TextInputDialog.OnFinishListener;
 import com.heshicaihao.fileexplorer.activity.FileExplorerPreferenceActivity;
 import com.heshicaihao.fileexplorer.constants.GlobalConsts;
 import com.heshicaihao.fileexplorer.fragment.FileViewFragment;
-import com.heshicaihao.fileexplorer.bean.FileInfo;
+import com.heshicaihao.fileexplorer.bean.FileInfoBean;
 import com.heshicaihao.fileexplorer.listener.IFileInteractionListener;
 import com.heshicaihao.fileexplorer.utils.Util;
 
@@ -79,7 +79,7 @@ public class FileViewInteractionHub implements IOperationProgressListener {
 
     private IFileInteractionListener mFileViewListener;
 
-    private ArrayList<FileInfo> mCheckedFileNameList = new ArrayList<FileInfo>();
+    private ArrayList<FileInfoBean> mCheckedFileNameList = new ArrayList<FileInfoBean>();
 
     private FileOperationHelper mFileOperationHelper;
 
@@ -137,7 +137,7 @@ public class FileViewInteractionHub implements IOperationProgressListener {
         if (mCheckedFileNameList.size() == 0) {
             int pos = mListViewContextMenuSelectedItem;
             if (pos != -1) {
-                FileInfo fileInfo = mFileViewListener.getItem(pos);
+                FileInfoBean fileInfo = mFileViewListener.getItem(pos);
                 if (fileInfo != null) {
                     mCheckedFileNameList.add(fileInfo);
                 }
@@ -145,7 +145,7 @@ public class FileViewInteractionHub implements IOperationProgressListener {
         }
     }
 
-    public ArrayList<FileInfo> getSelectedFileList() {
+    public ArrayList<FileInfoBean> getSelectedFileList() {
         return mCheckedFileNameList;
     }
 
@@ -171,7 +171,7 @@ public class FileViewInteractionHub implements IOperationProgressListener {
         });
     }
 
-    public FileInfo getItem(int pos) {
+    public FileInfoBean getItem(int pos) {
         return mFileViewListener.getItem(pos);
     }
 
@@ -310,7 +310,7 @@ public class FileViewInteractionHub implements IOperationProgressListener {
 
     public void onOperationSelectAll() {
         mCheckedFileNameList.clear();
-        for (FileInfo f : mFileViewListener.getAllFiles()) {
+        for (FileInfoBean f : mFileViewListener.getAllFiles()) {
             f.Selected = true;
             mCheckedFileNameList.add(f);
         }
@@ -446,7 +446,7 @@ public class FileViewInteractionHub implements IOperationProgressListener {
         onOperationCopy(getSelectedFileList());
     }
 
-    public void onOperationCopy(ArrayList<FileInfo> files) {
+    public void onOperationCopy(ArrayList<FileInfoBean> files) {
         mFileOperationHelper.Copy(files);
         clearSelection();
 
@@ -525,8 +525,8 @@ public class FileViewInteractionHub implements IOperationProgressListener {
     }
 
     public void onOperationSend() {
-        ArrayList<FileInfo> selectedFileList = getSelectedFileList();
-        for (FileInfo f : selectedFileList) {
+        ArrayList<FileInfoBean> selectedFileList = getSelectedFileList();
+        for (FileInfoBean f : selectedFileList) {
             if (f.IsDir) {
                 AlertDialog dialog = new AlertDialog.Builder(mContext).setMessage(
                         R.string.error_info_cant_send_folder).setPositiveButton(R.string.confirm, null).create();
@@ -554,7 +554,7 @@ public class FileViewInteractionHub implements IOperationProgressListener {
         if (getSelectedFileList().size() == 0)
             return;
 
-        final FileInfo f = getSelectedFileList().get(0);
+        final FileInfoBean f = getSelectedFileList().get(0);
         clearSelection();
 
         TextInputDialog dialog = new TextInputDialog(mContext, mContext.getString(R.string.operation_rename),
@@ -569,7 +569,7 @@ public class FileViewInteractionHub implements IOperationProgressListener {
         dialog.show();
     }
 
-    private boolean doRename(final FileInfo f, String text) {
+    private boolean doRename(final FileInfoBean f, String text) {
         if (TextUtils.isEmpty(text))
             return false;
 
@@ -608,17 +608,17 @@ public class FileViewInteractionHub implements IOperationProgressListener {
     }
 
     public void onOperationDelete(int position) {
-        FileInfo file = mFileViewListener.getItem(position);
+        FileInfoBean file = mFileViewListener.getItem(position);
         if (file == null)
             return;
 
-        ArrayList<FileInfo> selectedFileList = new ArrayList<FileInfo>();
+        ArrayList<FileInfoBean> selectedFileList = new ArrayList<FileInfoBean>();
         selectedFileList.add(file);
         doOperationDelete(selectedFileList);
     }
 
-    private void doOperationDelete(final ArrayList<FileInfo> selectedFileList) {
-        final ArrayList<FileInfo> selectedFiles = new ArrayList<FileInfo>(selectedFileList);
+    private void doOperationDelete(final ArrayList<FileInfoBean> selectedFileList) {
+        final ArrayList<FileInfoBean> selectedFiles = new ArrayList<FileInfoBean>(selectedFileList);
         Dialog dialog = new AlertDialog.Builder(mContext)
                 .setMessage(mContext.getString(R.string.operation_delete_confirm_message))
                 .setPositiveButton(R.string.confirm, new DialogInterface.OnClickListener() {
@@ -641,7 +641,7 @@ public class FileViewInteractionHub implements IOperationProgressListener {
         if (getSelectedFileList().size() == 0)
             return;
 
-        FileInfo file = getSelectedFileList().get(0);
+        FileInfoBean file = getSelectedFileList().get(0);
         if (file == null)
             return;
 
@@ -693,7 +693,7 @@ public class FileViewInteractionHub implements IOperationProgressListener {
             AdapterContextMenuInfo info = (AdapterContextMenuInfo) menuInfo;
 
             FavoriteDatabaseHelper databaseHelper = FavoriteDatabaseHelper.getInstance();
-            FileInfo file = mFileViewListener.getItem(info.position);
+            FileInfoBean file = mFileViewListener.getItem(info.position);
             if (databaseHelper != null && file != null) {
                 int stringId = databaseHelper.isFavorite(file.filePath) ? R.string.operation_unfavorite
                         : R.string.operation_favorite;
@@ -951,7 +951,7 @@ public class FileViewInteractionHub implements IOperationProgressListener {
     }
 
     public void onListItemClick(AdapterView<?> parent, View view, int position, long id) {
-        FileInfo lFileInfo = mFileViewListener.getItem(position);
+        FileInfoBean lFileInfo = mFileViewListener.getItem(position);
         showDropdownNavigation(false);
 
         if (lFileInfo == null) {
@@ -1019,7 +1019,7 @@ public class FileViewInteractionHub implements IOperationProgressListener {
     }
 
     // check or uncheck
-    public boolean onCheckItem(FileInfo f, View v) {
+    public boolean onCheckItem(FileInfoBean f, View v) {
         if (isMoveState())
             return false;
 
@@ -1048,7 +1048,7 @@ public class FileViewInteractionHub implements IOperationProgressListener {
 
     public void clearSelection() {
         if (mCheckedFileNameList.size() > 0) {
-            for (FileInfo f : mCheckedFileNameList) {
+            for (FileInfoBean f : mCheckedFileNameList) {
                 if (f == null) {
                     continue;
                 }
@@ -1059,7 +1059,7 @@ public class FileViewInteractionHub implements IOperationProgressListener {
         }
     }
 
-    private void viewFile(FileInfo lFileInfo) {
+    private void viewFile(FileInfoBean lFileInfo) {
         try {
             IntentBuilder.viewFile(mContext, lFileInfo.filePath);
         } catch (ActivityNotFoundException e) {
@@ -1078,11 +1078,11 @@ public class FileViewInteractionHub implements IOperationProgressListener {
         return true;
     }
 
-    public void copyFile(ArrayList<FileInfo> files) {
+    public void copyFile(ArrayList<FileInfoBean> files) {
         mFileOperationHelper.Copy(files);
     }
 
-    public void moveFileFrom(ArrayList<FileInfo> files) {
+    public void moveFileFrom(ArrayList<FileInfoBean> files) {
         mFileOperationHelper.StartMove(files);
         showConfirmOperationBar(true);
         updateConfirmButtons();

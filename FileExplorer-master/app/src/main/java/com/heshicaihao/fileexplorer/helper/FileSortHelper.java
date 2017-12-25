@@ -19,7 +19,7 @@
 
 package com.heshicaihao.fileexplorer.helper;
 
-import com.heshicaihao.fileexplorer.bean.FileInfo;
+import com.heshicaihao.fileexplorer.bean.FileInfoBean;
 import com.heshicaihao.fileexplorer.utils.Util;
 
 import java.util.Comparator;
@@ -61,10 +61,10 @@ public class FileSortHelper {
         return mComparatorList.get(mSort);
     }
 
-    private abstract class FileComparator implements Comparator<FileInfo> {
+    private abstract class FileComparator implements Comparator<FileInfoBean> {
 
         @Override
-        public int compare(FileInfo object1, FileInfo object2) {
+        public int compare(FileInfoBean object1, FileInfoBean object2) {
             if (object1.IsDir == object2.IsDir) {
                 return doCompare(object1, object2);
             }
@@ -78,26 +78,26 @@ public class FileSortHelper {
             }
         }
 
-        protected abstract int doCompare(FileInfo object1, FileInfo object2);
+        protected abstract int doCompare(FileInfoBean object1, FileInfoBean object2);
     }
 
     private Comparator cmpName = new FileComparator() {
         @Override
-        public int doCompare(FileInfo object1, FileInfo object2) {
+        public int doCompare(FileInfoBean object1, FileInfoBean object2) {
             return object1.fileName.compareToIgnoreCase(object2.fileName);
         }
     };
 
     private Comparator cmpSize = new FileComparator() {
         @Override
-        public int doCompare(FileInfo object1, FileInfo object2) {
+        public int doCompare(FileInfoBean object1, FileInfoBean object2) {
             return longToCompareInt(object1.fileSize - object2.fileSize);
         }
     };
 
     private Comparator cmpDate = new FileComparator() {
         @Override
-        public int doCompare(FileInfo object1, FileInfo object2) {
+        public int doCompare(FileInfoBean object1, FileInfoBean object2) {
             return longToCompareInt(object2.ModifiedDate - object1.ModifiedDate);
         }
     };
@@ -108,7 +108,7 @@ public class FileSortHelper {
 
     private Comparator cmpType = new FileComparator() {
         @Override
-        public int doCompare(FileInfo object1, FileInfo object2) {
+        public int doCompare(FileInfoBean object1, FileInfoBean object2) {
             int result = Util.getExtFromFilename(object1.fileName).compareToIgnoreCase(
                     Util.getExtFromFilename(object2.fileName));
             if (result != 0)

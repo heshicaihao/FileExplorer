@@ -23,7 +23,7 @@ import android.mtp.MtpConstants;
 
 import java.util.HashMap;
 
-public class MediaFile {
+public class MediaFileBean {
 
     // Audio file types
     public static final int FILE_TYPE_MP3 = 1;

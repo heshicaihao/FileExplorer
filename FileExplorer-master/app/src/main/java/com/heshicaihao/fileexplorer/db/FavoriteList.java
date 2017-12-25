@@ -17,12 +17,12 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.heshicaihao.fileexplorer.bean.FavoriteBean;
 import com.heshicaihao.fileexplorer.helper.FileIconHelper;
 import com.heshicaihao.fileexplorer.common.IntentBuilder;
 import com.heshicaihao.fileexplorer.MainActivity;
 import com.heshicaihao.fileexplorer.R;
 import com.heshicaihao.fileexplorer.db.FavoriteDatabaseHelper.FavoriteDatabaseListener;
-import com.heshicaihao.fileexplorer.bean.FavoriteItem;
 import com.heshicaihao.fileexplorer.fragment.FileViewFragment;
 import com.heshicaihao.fileexplorer.adapter.FavoriteListAdapter;
 import com.heshicaihao.fileexplorer.utils.Util;
@@ -33,9 +33,9 @@ import java.util.ArrayList;
 public class FavoriteList implements FavoriteDatabaseListener {
     private static final String LOG_TAG = "FavoriteList";
 
-    private ArrayList<FavoriteItem> mFavoriteList = new ArrayList<FavoriteItem>();
+    private ArrayList<FavoriteBean> mFavoriteList = new ArrayList<FavoriteBean>();
 
-    private ArrayAdapter<FavoriteItem> mFavoriteListAdapter;
+    private ArrayAdapter<FavoriteBean> mFavoriteListAdapter;
 
     private FavoriteDatabaseHelper mFavoriteDatabase;
 
@@ -56,7 +56,7 @@ public class FavoriteList implements FavoriteDatabaseListener {
         mListener = listener;
     }
 
-    public ArrayAdapter<FavoriteItem> getArrayAdapter() {
+    public ArrayAdapter<FavoriteBean> getArrayAdapter() {
         return mFavoriteListAdapter;
     }
 
@@ -66,7 +66,7 @@ public class FavoriteList implements FavoriteDatabaseListener {
         Cursor c = mFavoriteDatabase.query();
         if (c != null) {
             while (c.moveToNext()) {
-                FavoriteItem item = new FavoriteItem(c.getLong(0), c.getString(1), c.getString(2));
+                FavoriteBean item = new FavoriteBean(c.getLong(0), c.getString(1), c.getString(2));
                 item.fileInfo = Util.GetFileInfo(item.location);
                 mFavoriteList.add(item);
             }
@@ -80,7 +80,7 @@ public class FavoriteList implements FavoriteDatabaseListener {
                 if (file.exists())
                     continue;
 
-                FavoriteItem favorite = mFavoriteList.get(i);
+                FavoriteBean favorite = mFavoriteList.get(i);
                 mFavoriteDatabase.delete(favorite.id, false);
                 mFavoriteList.remove(i);
             }
@@ -96,7 +96,7 @@ public class FavoriteList implements FavoriteDatabaseListener {
             c.close();
 
         if (mFavoriteDatabase.isFirstCreate()) {
-            for (FavoriteItem fi : Util.getDefaultFavorites(mContext)) {
+            for (FavoriteBean fi : Util.getDefaultFavorites(mContext)) {
                 mFavoriteDatabase.insert(fi.title, fi.location);
             }
         }
@@ -126,7 +126,7 @@ public class FavoriteList implements FavoriteDatabaseListener {
     }
 
     public void onFavoriteListItemClick(AdapterView<?> parent, View view, int position, long id) {
-        FavoriteItem favorite = mFavoriteList.get(position);
+        FavoriteBean favorite = mFavoriteList.get(position);
 
         if (favorite.fileInfo.IsDir) {
             MainActivity activity = (MainActivity) mContext;
@@ -177,7 +177,7 @@ public class FavoriteList implements FavoriteDatabaseListener {
     };
 
     private void deleteFavorite(int position) {
-        FavoriteItem favorite = mFavoriteList.get(position);
+        FavoriteBean favorite = mFavoriteList.get(position);
         mFavoriteDatabase.delete(favorite.id, false);
         mFavoriteList.remove(position);
         mFavoriteListAdapter.notifyDataSetChanged();

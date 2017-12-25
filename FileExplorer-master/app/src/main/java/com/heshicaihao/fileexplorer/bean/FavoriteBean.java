@@ -19,28 +19,25 @@
 
 package com.heshicaihao.fileexplorer.bean;
 
-public class FileInfo {
+public class FavoriteBean {
+    // id in the database
+    public long id;
 
-    public String fileName;
+    public String title;
 
-    public String filePath;
+    // path
+    public String location;
 
-    public long fileSize;
+    public FileInfoBean fileInfo;
 
-    public boolean IsDir;
+    public FavoriteBean(String t, String l) {
+        title = t;
+        location = l;
+    }
 
-    public int Count;
-
-    public long ModifiedDate;
-
-    public boolean Selected;
-
-    public boolean canRead;
-
-    public boolean canWrite;
-
-    public boolean isHidden;
-
-    public long dbId; // id in the database, if is from database
-
+    public FavoriteBean(long i, String t, String l) {
+        id = i;
+        title = t;
+        location = l;
+    }
 }

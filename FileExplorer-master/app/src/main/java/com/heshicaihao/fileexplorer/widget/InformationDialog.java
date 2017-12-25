@@ -33,17 +33,17 @@ import android.widget.TextView;
 
 import com.heshicaihao.fileexplorer.helper.FileIconHelper;
 import com.heshicaihao.fileexplorer.R;
-import com.heshicaihao.fileexplorer.bean.FileInfo;
+import com.heshicaihao.fileexplorer.bean.FileInfoBean;
 import com.heshicaihao.fileexplorer.utils.Util;
 
 public class InformationDialog extends AlertDialog {
     protected static final int ID_USER = 100;
-    private FileInfo mFileInfo;
+    private FileInfoBean mFileInfo;
     private FileIconHelper mFileIconHelper;
     private Context mContext;
     private View mView;
 
-    public InformationDialog(Context context, FileInfo f, FileIconHelper iconHelper) {
+    public InformationDialog(Context context, FileInfoBean f, FileIconHelper iconHelper) {
         super(context);
         mFileInfo = f;
         mFileIconHelper = iconHelper;

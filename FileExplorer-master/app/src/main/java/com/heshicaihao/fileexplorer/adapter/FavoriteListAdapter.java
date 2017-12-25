@@ -28,20 +28,20 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 
-import com.heshicaihao.fileexplorer.bean.FavoriteItem;
+import com.heshicaihao.fileexplorer.bean.FavoriteBean;
 import com.heshicaihao.fileexplorer.helper.FileIconHelper;
-import com.heshicaihao.fileexplorer.bean.FileInfo;
+import com.heshicaihao.fileexplorer.bean.FileInfoBean;
 import com.heshicaihao.fileexplorer.R;
 import com.heshicaihao.fileexplorer.utils.Util;
 
-public class FavoriteListAdapter extends ArrayAdapter<FavoriteItem> {
+public class FavoriteListAdapter extends ArrayAdapter<FavoriteBean> {
     private Context mContext;
 
     private LayoutInflater mInflater;
 
     private FileIconHelper mFileIcon;
 
-    public FavoriteListAdapter(Context context, int resource, List<FavoriteItem> objects, FileIconHelper fileIcon) {
+    public FavoriteListAdapter(Context context, int resource, List<FavoriteBean> objects, FileIconHelper fileIcon) {
         super(context, resource, objects);
         mContext = context;
         mInflater = LayoutInflater.from(context);
@@ -57,8 +57,8 @@ public class FavoriteListAdapter extends ArrayAdapter<FavoriteItem> {
             view = mInflater.inflate(R.layout.favorite_item, parent, false);
         }
 
-        FavoriteItem item = getItem(position);
-        FileInfo lFileInfo = item.fileInfo;
+        FavoriteBean item = getItem(position);
+        FileInfoBean lFileInfo = item.fileInfo;
 
         Util.setText(view, R.id.file_name, item.title != null ? item.title : lFileInfo.fileName);
         if (lFileInfo.ModifiedDate > 0) {

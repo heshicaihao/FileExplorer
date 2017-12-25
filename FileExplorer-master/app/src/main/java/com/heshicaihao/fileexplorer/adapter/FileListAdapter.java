@@ -26,14 +26,14 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 
 import com.heshicaihao.fileexplorer.helper.FileIconHelper;
-import com.heshicaihao.fileexplorer.bean.FileInfo;
+import com.heshicaihao.fileexplorer.bean.FileInfoBean;
 import com.heshicaihao.fileexplorer.helper.FileListItem;
 import com.heshicaihao.fileexplorer.db.FileViewInteractionHub;
 import com.heshicaihao.fileexplorer.R;
 
 import java.util.List;
 
-public class FileListAdapter extends ArrayAdapter<FileInfo> {
+public class FileListAdapter extends ArrayAdapter<FileInfoBean> {
     private LayoutInflater mInflater;
 
     private FileViewInteractionHub mFileViewInteractionHub;
@@ -43,8 +43,8 @@ public class FileListAdapter extends ArrayAdapter<FileInfo> {
     private Context mContext;
 
     public FileListAdapter(Context context, int resource,
-            List<FileInfo> objects, FileViewInteractionHub f,
-            FileIconHelper fileIcon) {
+                           List<FileInfoBean> objects, FileViewInteractionHub f,
+                           FileIconHelper fileIcon) {
         super(context, resource, objects);
         mInflater = LayoutInflater.from(context);
         mFileViewInteractionHub = f;
@@ -61,7 +61,7 @@ public class FileListAdapter extends ArrayAdapter<FileInfo> {
             view = mInflater.inflate(R.layout.file_browser_item, parent, false);
         }
 
-        FileInfo lFileInfo = mFileViewInteractionHub.getItem(position);
+        FileInfoBean lFileInfo = mFileViewInteractionHub.getItem(position);
         FileListItem.setupFileListItemInfo(mContext, view, lFileInfo,
                 mFileIcon, mFileViewInteractionHub);
         view.findViewById(R.id.file_checkbox_area).setOnClickListener(

@@ -21,7 +21,7 @@ package com.heshicaihao.fileexplorer.helper;
 
 
 import com.heshicaihao.fileexplorer.R;
-import com.heshicaihao.fileexplorer.bean.FileInfo;
+import com.heshicaihao.fileexplorer.bean.FileInfoBean;
 import com.heshicaihao.fileexplorer.utils.Util;
 
 import android.content.Context;
@@ -101,7 +101,7 @@ public class FileIconHelper implements FileIconLoader.IconLoadFinishListener {
 
     }
 
-    public void setIcon(FileInfo fileInfo, ImageView fileImage, ImageView fileImageFrame) {
+    public void setIcon(FileInfoBean fileInfo, ImageView fileImage, ImageView fileImageFrame) {
         String filePath = fileInfo.filePath;
         long fileId = fileInfo.dbId;
         String extFromFilename = Util.getExtFromFilename(filePath);

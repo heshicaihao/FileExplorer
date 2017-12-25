@@ -30,7 +30,7 @@ import android.provider.MediaStore.Video;
 import android.util.Log;
 
 import com.heshicaihao.fileexplorer.R;
-import com.heshicaihao.fileexplorer.bean.MediaFile;
+import com.heshicaihao.fileexplorer.bean.MediaFileBean;
 import com.heshicaihao.fileexplorer.utils.Util;
 
 import java.io.FilenameFilter;
@@ -285,11 +285,11 @@ public class FileCategoryHelper {
     }
 
     public static FileCategory getCategoryFromPath(String path) {
-        MediaFile.MediaFileType type = MediaFile.getFileType(path);
+        MediaFileBean.MediaFileType type = MediaFileBean.getFileType(path);
         if (type != null) {
-            if (MediaFile.isAudioFileType(type.fileType)) return FileCategory.Music;
-            if (MediaFile.isVideoFileType(type.fileType)) return FileCategory.Video;
-            if (MediaFile.isImageFileType(type.fileType)) return FileCategory.Picture;
+            if (MediaFileBean.isAudioFileType(type.fileType)) return FileCategory.Music;
+            if (MediaFileBean.isVideoFileType(type.fileType)) return FileCategory.Video;
+            if (MediaFileBean.isImageFileType(type.fileType)) return FileCategory.Picture;
             if (Util.sDocMimeTypesSet.contains(type.mimeType)) return FileCategory.Doc;
         }
 

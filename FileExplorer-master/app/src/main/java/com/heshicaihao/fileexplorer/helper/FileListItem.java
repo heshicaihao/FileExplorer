@@ -34,12 +34,12 @@ import com.heshicaihao.fileexplorer.MainActivity;
 import com.heshicaihao.fileexplorer.R;
 import com.heshicaihao.fileexplorer.db.FileViewInteractionHub;
 import com.heshicaihao.fileexplorer.fragment.FileViewFragment;
-import com.heshicaihao.fileexplorer.bean.FileInfo;
+import com.heshicaihao.fileexplorer.bean.FileInfoBean;
 import com.heshicaihao.fileexplorer.utils.Util;
 
 public class FileListItem {
     public static void setupFileListItemInfo(Context context, View view,
-                                             FileInfo fileInfo, FileIconHelper fileIcon,
+                                             FileInfoBean fileInfo, FileIconHelper fileIcon,
                                              FileViewInteractionHub fileViewInteractionHub) {
 
         // if in moving mode, show selected file always
@@ -89,7 +89,7 @@ public class FileListItem {
             ImageView img = (ImageView) v.findViewById(R.id.file_checkbox);
             assert (img != null && img.getTag() != null);
 
-            FileInfo tag = (FileInfo) img.getTag();
+            FileInfoBean tag = (FileInfoBean) img.getTag();
             tag.Selected = !tag.Selected;
             ActionMode actionMode = ((MainActivity) mContext).getActionMode();
             if (actionMode == null) {
