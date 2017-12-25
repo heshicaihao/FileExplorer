@@ -48,6 +48,7 @@ import java.util.HashSet;
 public class Util {
     private static String ANDROID_SECURE = "/mnt/sdcard/.android_secure";
 
+	
     private static final String LOG_TAG = "Util";
 
     public static boolean isSDCardReady() {
