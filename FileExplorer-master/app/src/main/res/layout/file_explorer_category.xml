@@ -231,11 +231,11 @@
                         android:drawableLeft="@drawable/sd_card_available_icon" />
                 </LinearLayout>
 
-                <net.micode.fileexplorer.CategoryBar
+                <com.heshicaihao.fileexplorer.CategoryBar
                     android:id="@+id/category_bar" android:layout_width="fill_parent"
                     android:layout_height="35px" android:layout_gravity="center"
                     android:layout_marginBottom="5dip">
-                </net.micode.fileexplorer.CategoryBar>
+                </com.heshicaihao.fileexplorer.CategoryBar>
 
                 <LinearLayout android:layout_width="fill_parent"
                     android:orientation="vertical"
