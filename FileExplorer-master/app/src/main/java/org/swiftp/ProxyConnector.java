@@ -31,7 +31,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 
-import com.heshicaihao.fileexplorer.FTPServerService;
+import com.heshicaihao.fileexplorer.service.FTPServerService;
 
 import org.json.JSONException;
 import org.json.JSONObject;

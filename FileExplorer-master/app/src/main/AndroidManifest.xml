@@ -1,13 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.heshicaihao.fileexplorer">
 
- <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.INSTALL_PACKAGES" />
-    <uses-permission android:name="android.permission.DELETE_PACKAGES" />
+    <uses-permission
+        android:name="android.permission.INSTALL_PACKAGES"
+        tools:ignore="ProtectedPermissions" />
+    <uses-permission
+        android:name="android.permission.DELETE_PACKAGES"
+        tools:ignore="ProtectedPermissions" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
@@ -17,16 +22,17 @@
         android:theme="@android:style/Theme.Holo.Light"
         android:uiOptions="splitActionBarWhenNarrow">
         <activity
-            android:name="com.heshicaihao.fileexplorer.FileExplorerTabActivity"
+            android:name=".MainActivity"
             android:configChanges="screenSize|keyboardHidden"
             android:screenOrientation="sensor"
             android:uiOptions="splitActionBarWhenNarrow">
-            <intent-filter >
+            <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-            <intent-filter >
+            <intent-filter>
                 <action android:name="android.intent.action.PICK" />
 
                 <category android:name="android.intent.category.DEFAULT" />
@@ -36,7 +42,7 @@
 
                 <data android:scheme="file" />
             </intent-filter>
-            <intent-filter >
+            <intent-filter>
                 <action android:name="android.intent.action.GET_CONTENT" />
 
                 <category android:name="android.intent.category.OPENABLE" />
@@ -46,30 +52,13 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".com.heshicaihao.fileexplorer.SearchActivity" >
-            <intent-filter >
-                <action android:name="android.intent.action.SEARCH" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-
-            <meta-data
-                android:name="android.app.searchable"
-                android:resource="@xml/searchable" />
-        </activity>
-
         <activity
+            android:name=".activity.FileExplorerPreferenceActivity"
             android:label="@string/menu_setting"
             android:launchMode="singleTop"
-            android:name="com.heshicaihao.fileexplorer.FileExplorerPreferenceActivity"
-            android:theme="@android:style/Theme.Holo.Light.NoActionBar" >
-        </activity>
+            android:theme="@android:style/Theme.Holo.Light.NoActionBar"/>
 
-        <meta-data
-            android:name="android.app.default_searchable"
-            android:value=".SearchActivity" />
-
-        <service android:name="com.heshicaihao.fileexplorer.FTPServerService" />
+        <service android:name="com.heshicaihao.fileexplorer.service.FTPServerService" />
     </application>
 
 </manifest>
