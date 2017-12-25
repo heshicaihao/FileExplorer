@@ -33,5 +33,7 @@ dependencies {
     testCompile 'junit:junit:4.12'
     //noinspection GradleCompatible
     compile 'com.android.support:support-v13:27.0.2'
+    //gson解析
+    compile 'com.google.code.gson:gson:2.8.2'
 
 }

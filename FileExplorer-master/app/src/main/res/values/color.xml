@@ -16,5 +16,14 @@
 
     <color name="remote_connect_text">#FFe78018</color>
     <color name="remote_disconnect_text">#FF901821</color>
+    <color name="white">#FFFFFF</color>
+    <color name="dialog_red_normal">#FF6565</color>
+    <color name="dialog_red_pressed">#CC5252</color>
+    <color name="dialog_white_pressed">#CACACA</color>
+    <color name="Divider_color">#dadada</color>
+    <color name="trans">#00000000</color>
+    <color name="half_line_gray_color">#A3A3A3</color>
+    <color name="actionsheet_gray">#8F8F8F</color>
+
 
 </resources>

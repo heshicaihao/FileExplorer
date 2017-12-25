@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/dialog_view"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+
+    <TextView
+        android:id="@+id/tv_dia_pro_title"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="@color/dialog_red_normal"
+        android:gravity="center_horizontal|center_vertical"
+        android:text="确定"
+        android:textColor="@color/white"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/tv_dia_pro_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="25dp"
+        android:gravity="center_horizontal"
+        android:text="您使用的已是最新版本。"
+        android:textColor="#767978"
+        android:textSize="20dp" />
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="0.1dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:background="@color/Divider_color" />
+
+    <RelativeLayout
+        android:id="@+id/rl_two_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:id="@+id/ll_dia_pro"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+
+            <TextView
+                android:id="@+id/ib_dia_pro_confirm"
+                android:layout_width="0dp"
+                android:layout_height="45dp"
+                android:layout_marginBottom="20dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginTop="24dp"
+                android:layout_weight="1"
+                android:background="@drawable/btn_half_red_selector"
+                android:clickable="true"
+                android:gravity="center_horizontal|center_vertical"
+                android:text="确定"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                android:visibility="visible" />
+
+
+            <TextView
+                android:id="@+id/ib_dia_pro_cancel"
+                android:layout_width="0dp"
+                android:layout_height="45dp"
+                android:layout_marginBottom="20dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginTop="24dp"
+                android:layout_weight="1"
+                android:background="@drawable/btn_half_white_selector"
+                android:clickable="true"
+                android:gravity="center_horizontal|center_vertical"
+                android:text="取消"
+                android:textColor="@color/actionsheet_gray"
+                android:textSize="18sp"
+                android:visibility="visible" />
+
+        </LinearLayout>
+    </RelativeLayout>
+
+
+</LinearLayout>

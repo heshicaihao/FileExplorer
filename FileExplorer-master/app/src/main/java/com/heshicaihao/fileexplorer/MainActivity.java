@@ -27,21 +27,25 @@ import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v13.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.ActionMode;
 
+import com.heshicaihao.fileexplorer.common.SharedData;
 import com.heshicaihao.fileexplorer.fragment.FileCategoryFragment;
 import com.heshicaihao.fileexplorer.fragment.FileViewFragment;
 import com.heshicaihao.fileexplorer.fragment.ServerControlFragment;
+import com.heshicaihao.fileexplorer.utils.LogUtils;
+import com.heshicaihao.fileexplorer.utils.PermissionUtils;
 import com.heshicaihao.fileexplorer.utils.Util;
 
 import java.util.ArrayList;
 
 /**
- *
  * @author heshicaihao
  */
 public class MainActivity extends Activity {
@@ -50,12 +54,26 @@ public class MainActivity extends Activity {
     ViewPager mViewPager;
     TabsAdapter mTabsAdapter;
     ActionMode mActionMode;
+    private PermissionUtils mPermissionUtils;//权限控制
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        LogUtils.d("onCreate前");
         setContentView(R.layout.activity_mian);
+        mPermissionUtils = new PermissionUtils(MainActivity.this);//权限控制
+        SharedData.setParam(MainActivity.this, "isPerm", false);//初始化权限是否全部授权判断
+        //判断使用APP的android版本是否是android6.0如果是android6.0则需要进行权限判断后再检查更新，是android6.0以下的版本则直接检查更新
+        int apiLevel = Build.VERSION.SDK_INT;
+        if (apiLevel < 23) {
+        } else {
+            mPermissionUtils.insertDummyContactWrapper(true);
+        }
+        initView();
+        LogUtils.d("onCreate后");
+    }
+
+    private void initView() {
         mViewPager = (ViewPager) findViewById(R.id.pager);
         mViewPager.setOffscreenPageLimit(DEFAULT_OFFSCREEN_PAGES);
 
@@ -77,15 +95,38 @@ public class MainActivity extends Activity {
     @Override
     protected void onPause() {
         super.onPause();
+        LogUtils.d("onPause前");
         SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(this).edit();
         editor.putInt(INSTANCESTATE_TAB, getActionBar().getSelectedNavigationIndex());
         editor.commit();
+        LogUtils.d("onPause后");
     }
+
+    @Override
+    public void onRequestPermissionsResult(
+            int requestCode, String[] permissions, int[] grantResults) {
+        //权限适配监听
+        mPermissionUtils.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        LogUtils.d("onRequestPermissionsResult");
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        LogUtils.d("onRestart前");
+        SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(this).edit();
+        editor.putInt(INSTANCESTATE_TAB, getActionBar().getSelectedNavigationIndex());
+        if ((Boolean) SharedData.getParam(MainActivity.this, "isPerm", false)) {//在权限回调后检查
+            mPermissionUtils.insertDummyContactWrapper(true);
+        }
+        LogUtils.d("onRestart后");
+    }
+
 
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         if (getActionBar().getSelectedNavigationIndex() == Util.CATEGORY_TAB_INDEX) {
-            FileCategoryFragment categoryFragement =(FileCategoryFragment) mTabsAdapter.getItem(Util.CATEGORY_TAB_INDEX);
+            FileCategoryFragment categoryFragement = (FileCategoryFragment) mTabsAdapter.getItem(Util.CATEGORY_TAB_INDEX);
             if (categoryFragement.isHomePage()) {
                 reInstantiateCategoryTab();
             } else {
@@ -113,6 +154,7 @@ public class MainActivity extends Activity {
     public interface IBackPressedListener {
         /**
          * 处理back事件。
+         *
          * @return True: 表示已经处理; False: 没有处理，让基类处理。
          */
         boolean onBack();
@@ -207,12 +249,12 @@ public class MainActivity extends Activity {
         @Override
         public void onTabSelected(Tab tab, FragmentTransaction ft) {
             Object tag = tab.getTag();
-            for (int i=0; i<mTabs.size(); i++) {
+            for (int i = 0; i < mTabs.size(); i++) {
                 if (mTabs.get(i) == tag) {
                     mViewPager.setCurrentItem(i);
                 }
             }
-            if(!tab.getText().equals(mContext.getString(R.string.tab_sd))) {
+            if (!tab.getText().equals(mContext.getString(R.string.tab_sd))) {
                 ActionMode actionMode = ((MainActivity) mContext).getActionMode();
                 if (actionMode != null) {
                     actionMode.finish();
