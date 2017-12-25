@@ -88,7 +88,8 @@
     <string name="dialog_type_image">Image</string>
     <string name="favorite_photo">Photo</string>
     <string name="favorite_sdcard">SD Card</string>
-    <string name="favourite_root">Root</string><string name="favorite_screen_cap">MIUI Screen Shot</string>
+    <string name="favourite_root">Root</string>
+    <string name="favorite_screen_cap">MIUI Screen Shot</string>
     <string name="favorite_ringtone">Ringtone</string>
     <string name="multi_select_title">Selected <xliff:g id="number">%1$s</xliff:g> item(s)</string>
     <string name="menu_setting">Preferences</string>

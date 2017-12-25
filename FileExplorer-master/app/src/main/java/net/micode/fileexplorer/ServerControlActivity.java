@@ -184,7 +184,7 @@ public class ServerControlActivity extends Fragment implements IBackPressedListe
     public void updateUi() {
         myLog.l(Log.DEBUG, "Updating UI", true);
 
-        WifiManager wifiMgr = (WifiManager) mActivity.getSystemService(Context.WIFI_SERVICE);
+        WifiManager wifiMgr = (WifiManager) mActivity.getApplicationContext().getSystemService(Context.WIFI_SERVICE);
         int wifiState = wifiMgr.getWifiState();
         WifiInfo info = wifiMgr.getConnectionInfo();
         String wifiId = info != null ? info.getSSID() : null;

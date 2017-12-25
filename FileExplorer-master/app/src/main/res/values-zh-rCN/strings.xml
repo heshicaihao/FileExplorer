@@ -100,5 +100,7 @@
     <string name="pref_show_real_path">显示真实路径</string>
     <string name="pref_primary_folder_summary">程序启动时显示的文件夹，当前路径为<xliff:g id="string">%1$s</xliff:g></string>
     <string name="pref_show_real_path_summary">在导航栏中显示真实路径</string>
+    <string name="favourite_root">Root</string>
+    <string name="default_primary_folder">/mnt/sdcard</string>
 
 </resources>

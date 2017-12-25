@@ -27,6 +27,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import android.annotation.SuppressLint;
 import android.app.Notification;
 import android.app.PendingIntent;
 import android.app.Service;
@@ -263,7 +264,18 @@ public class FTPServerService extends Service implements Runnable {
         Intent notificationIntent = new Intent(this, FileExplorerTabActivity.class);
         notificationIntent.putExtra(GlobalConsts.INTENT_EXTRA_TAB, 2);
         PendingIntent contentIntent = PendingIntent.getActivity(this, 0, notificationIntent, 0);
-        notification.setLatestEventInfo(getApplicationContext(), contentTitle, contentText, contentIntent);
+//        notification.setLatestEventInfo(getApplicationContext(), contentTitle, contentText, contentIntent);
+
+        Notification.Builder builder = new Notification.Builder(getApplicationContext())
+                .setAutoCancel(true)
+                .setContentTitle(contentTitle)
+                .setContentText(contentText)
+                .setContentIntent(contentIntent)
+                .setSmallIcon(R.drawable.icon)
+                .setWhen(System.currentTimeMillis())
+                .setOngoing(true);
+        notification=builder.getNotification();
+
         notification.flags |= Notification.FLAG_ONGOING_EVENT;
 
         startForeground(123453, notification);
@@ -485,6 +497,7 @@ public class FTPServerService extends Service implements Runnable {
     private void takeWifiLock() {
         myLog.d("Taking wifi lock");
         if (wifiLock == null) {
+            @SuppressLint("WifiManagerLeak")
             WifiManager manager = (WifiManager) getSystemService(Context.WIFI_SERVICE);
             wifiLock = manager.createWifiLock("SwiFTP");
             wifiLock.setReferenceCounted(false);
@@ -515,7 +528,7 @@ public class FTPServerService extends Service implements Runnable {
         if (myContext == null) {
             throw new NullPointerException("Global context is null");
         }
-        WifiManager wifiMgr = (WifiManager) myContext.getSystemService(Context.WIFI_SERVICE);
+        @SuppressLint("WifiManagerLeak") WifiManager wifiMgr = (WifiManager) myContext.getSystemService(Context.WIFI_SERVICE);
         if (isWifiEnabled()) {
             int ipAsInt = wifiMgr.getConnectionInfo().getIpAddress();
             if (ipAsInt == 0) {
@@ -533,7 +546,7 @@ public class FTPServerService extends Service implements Runnable {
         if (myContext == null) {
             throw new NullPointerException("Global context is null");
         }
-        WifiManager wifiMgr = (WifiManager) myContext.getSystemService(Context.WIFI_SERVICE);
+        WifiManager wifiMgr = (WifiManager) myContext.getApplicationContext().getSystemService(Context.WIFI_SERVICE);
         if (wifiMgr.getWifiState() == WifiManager.WIFI_STATE_ENABLED) {
             ConnectivityManager connManager = (ConnectivityManager) myContext
                     .getSystemService(Context.CONNECTIVITY_SERVICE);

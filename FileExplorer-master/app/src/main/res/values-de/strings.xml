@@ -88,7 +88,8 @@
     <string name="dialog_type_image">Bild</string>
     <string name="favorite_photo">Foto</string>
     <string name="favorite_sdcard">SD-Karte</string>
-    <string name="favourite_root">Root</string><string name="favorite_screen_cap">MIUI-Bildschirmfoto</string>
+    <string name="favourite_root">Root</string>
+    <string name="favorite_screen_cap">MIUI-Bildschirmfoto</string>
     <string name="favorite_ringtone">Klingelton</string>
     <string name="multi_select_title"><xliff:g id="number">%1$s</xliff:g> Elemente ausgewählt</string>
     <string name="menu_setting">Einstellungen</string>

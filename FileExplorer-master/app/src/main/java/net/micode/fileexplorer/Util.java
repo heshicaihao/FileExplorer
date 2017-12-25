@@ -19,6 +19,7 @@
 
 package net.micode.fileexplorer;
 
+import android.annotation.SuppressLint;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -384,7 +385,17 @@ public class Util {
             intent = new Intent(context, FileViewActivity.class);
         }
         PendingIntent contentIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_ONE_SHOT);
-        notification.setLatestEventInfo(context, title, body, contentIntent);
+//        notification.setLatestEventInfo(context, title, body, contentIntent);
+        Notification.Builder builder = new Notification.Builder(context)
+                .setAutoCancel(true)
+                .setContentTitle(title)
+                .setContentText(body)
+                .setContentIntent(contentIntent)
+                .setSmallIcon(R.drawable.icon)
+                .setWhen(System.currentTimeMillis())
+                .setOngoing(true);
+        notification=builder.getNotification();
+
         manager.notify(drawableId, notification);
     }
 
@@ -397,6 +408,7 @@ public class Util {
         return dateFormat.format(date) + " " + timeFormat.format(date);
     }
 
+    @SuppressLint("StringFormatMatches")
     public static void updateActionModeTitle(ActionMode mode, Context context, int selectedNum) {
         if (mode != null) {
             mode.setTitle(context.getString(R.string.multi_select_title,selectedNum));
