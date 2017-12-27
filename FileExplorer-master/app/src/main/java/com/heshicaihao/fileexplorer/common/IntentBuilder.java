@@ -27,10 +27,14 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
+import android.support.v4.BuildConfig;
+import android.support.v4.content.FileProvider;
 import android.text.TextUtils;
 
 import com.heshicaihao.fileexplorer.R;
 import com.heshicaihao.fileexplorer.bean.FileInfoBean;
+import com.heshicaihao.fileexplorer.utils.LogUtils;
 import com.heshicaihao.fileexplorer.utils.MimeUtils;
 
 public class IntentBuilder {
@@ -41,9 +45,18 @@ public class IntentBuilder {
         if (!TextUtils.isEmpty(type) && !TextUtils.equals(type, "*/*")) {
             /* 设置intent的file与MimeType */
             Intent intent = new Intent();
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             intent.setAction(android.content.Intent.ACTION_VIEW);
-            intent.setDataAndType(Uri.fromFile(new File(filePath)), type);
+            LogUtils.d("filePath:",filePath+"");
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                Uri contentUri = FileProvider.getUriForFile(context, "com.heshicaihao.fileexplorer" + ".fileProvider",new File(filePath));
+                intent.setDataAndType(contentUri, type);
+                LogUtils.d("contentUri:",contentUri+"");
+            } else {
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                intent.setDataAndType(Uri.fromFile(new File(filePath)), type);
+                LogUtils.d("contentUri:",Uri.fromFile(new File(filePath))+"");
+            }
             context.startActivity(intent);
         } else {
             // unknown MimeType
@@ -75,9 +88,20 @@ public class IntentBuilder {
                                 break;
                             }
                             Intent intent = new Intent();
-                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                             intent.setAction(android.content.Intent.ACTION_VIEW);
-                            intent.setDataAndType(Uri.fromFile(new File(filePath)), selectType);
+                            LogUtils.d("filePath:",filePath+"");
+                            //判断是否是AndroidN以及更高的版本
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                                intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                                Uri contentUri = FileProvider.getUriForFile(context, "com.heshicaihao.fileexplorer" + ".fileProvider",new File(filePath));
+                                intent.setDataAndType(contentUri, selectType);
+                                LogUtils.d("contentUri:",contentUri+"");
+                            } else {
+                                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                intent.setDataAndType(Uri.fromFile(new File(filePath)), selectType);
+                                LogUtils.d("contentUri:",Uri.fromFile(new File(filePath))+"");
+                            }
+
                             context.startActivity(intent);
                         }
                     });
