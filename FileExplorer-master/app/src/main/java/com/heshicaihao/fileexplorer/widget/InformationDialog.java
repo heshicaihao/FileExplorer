@@ -19,8 +19,6 @@
 
 package com.heshicaihao.fileexplorer.widget;
 
-import java.io.File;
-
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -31,10 +29,12 @@ import android.os.Message;
 import android.view.View;
 import android.widget.TextView;
 
-import com.heshicaihao.fileexplorer.helper.FileIconHelper;
 import com.heshicaihao.fileexplorer.R;
 import com.heshicaihao.fileexplorer.bean.FileInfoBean;
+import com.heshicaihao.fileexplorer.helper.FileIconHelper;
 import com.heshicaihao.fileexplorer.utils.Util;
+
+import java.io.File;
 
 public class InformationDialog extends AlertDialog {
     protected static final int ID_USER = 100;
@@ -89,7 +89,9 @@ public class InformationDialog extends AlertDialog {
                     long size = data.getLong("SIZE");
                     ((TextView) mView.findViewById(R.id.information_size)).setText(formatFileSizeString(size));
             }
-        };
+        }
+
+        ;
     };
 
     private AsyncTask task;
