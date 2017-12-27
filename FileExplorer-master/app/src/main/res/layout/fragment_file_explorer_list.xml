@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/file_browse_frame"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
@@ -12,53 +11,59 @@
         android:id="@+id/navigation_bar"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:gravity="center_vertical"
         android:background="@drawable/secondary_title_background"
+        android:gravity="center_vertical"
         android:paddingLeft="10dip"
         android:paddingRight="10dip">
+
         <LinearLayout
             android:layout_width="0dip"
-            android:layout_weight="1"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:gravity="center_vertical">
+
             <LinearLayout
                 android:id="@+id/current_path_pane"
-                android:background="@drawable/path_pane_bg"
                 android:layout_width="fill_parent"
-                android:maxWidth="300dip"
                 android:layout_height="wrap_content"
-                android:gravity="center_vertical">
+                android:background="@drawable/path_pane_bg"
+                android:gravity="center_vertical"
+                android:maxWidth="300dip">
+
                 <LinearLayout
                     android:id="@+id/current_path_scroller"
                     android:layout_width="0dip"
-                    android:layout_weight="1"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="5dip"
+                    android:layout_weight="1"
                     android:gravity="center_vertical">
+
                     <TextView
                         android:id="@+id/current_path_view"
+                        style="?android:attr/textAppearanceMedium"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:ellipsize="start"
                         android:paddingLeft="10dip"
-                        android:singleLine="true"
-                        style="?android:attr/textAppearanceMedium" />
+                        android:singleLine="true" />
                 </LinearLayout>
+
                 <ImageView
                     android:id="@+id/path_pane_arrow"
-                    android:src="@drawable/arrow_down"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical" />
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/arrow_down" />
             </LinearLayout>
         </LinearLayout>
+
         <ImageView
             android:id="@+id/path_pane_up_level"
-            android:src="@drawable/path_up_level"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical|right"
-            android:layout_marginLeft="5dip" />
+            android:layout_marginLeft="5dip"
+            android:src="@drawable/path_up_level" />
     </LinearLayout>
     <!-- end path -->
 
@@ -66,71 +71,79 @@
         android:layout_width="fill_parent"
         android:layout_height="0dip"
         android:layout_weight="1">
+
         <ListView
             android:id="@+id/file_path_list"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:headerDividersEnabled="true"
-            android:footerDividersEnabled="true" android:fastScrollEnabled="true"/>
+            android:fastScrollEnabled="true"
+            android:footerDividersEnabled="true"
+            android:headerDividersEnabled="true" />
+
         <LinearLayout
             android:id="@+id/empty_view"
-            android:orientation="vertical"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:gravity="center"
+            android:orientation="vertical"
             android:visibility="gone">
+
             <ImageView
-                android:src="@drawable/empty_icon"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:src="@drawable/empty_icon" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:singleLine="true"
                 android:text="@string/no_file"
-                android:textSize="27px"
-                android:singleLine="true" />
+                android:textSize="27px" />
         </LinearLayout>
+
         <ScrollView
             android:id="@+id/dropdown_navigation"
-            android:overScrollMode="never"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/dropdown"
+            android:overScrollMode="never"
             android:visibility="gone">
+
             <LinearLayout
                 android:id="@+id/dropdown_navigation_list"
-                android:orientation="vertical"
                 android:layout_width="fill_parent"
-                android:layout_height="wrap_content">
-            </LinearLayout>
+                android:layout_height="wrap_content"
+                android:orientation="vertical"></LinearLayout>
         </ScrollView>
+
         <LinearLayout
             android:id="@+id/sd_not_available_page"
-            android:orientation="vertical"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:gravity="center"
+            android:orientation="vertical"
             android:visibility="gone">
+
             <ImageView
-                android:src="@drawable/sd_not_available"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="25px" />
+                android:layout_marginBottom="25px"
+                android:src="@drawable/sd_not_available" />
 
             <TextView
-                android:text="@string/enable_sd_card"
-                android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
-                android:textSize="22px"
-                android:gravity="center" />
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/enable_sd_card"
+                android:textSize="22px" />
 
         </LinearLayout>
     </FrameLayout>
 
     <LinearLayout
         android:id="@+id/moving_operation_bar"
-        android:visibility="gone"
-        style="@style/BottomButtonBar">
+        style="@style/BottomButtonBar"
+        android:visibility="gone">
 
         <Button
             android:id="@+id/button_moving_confirm"
@@ -145,8 +158,8 @@
 
     <LinearLayout
         android:id="@+id/pick_operation_bar"
-        android:visibility="gone"
-        style="@style/BottomButtonBar">
+        style="@style/BottomButtonBar"
+        android:visibility="gone">
 
         <Button
             android:id="@+id/button_pick_confirm"
@@ -163,32 +176,37 @@
         android:id="@+id/operation_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:visibility="gone"
-        android:background="@drawable/operation_bar_bg">
+        android:background="@drawable/operation_bar_bg"
+        android:visibility="gone">
+
         <TextView
             android:id="@+id/button_operation_delete"
-            android:text="@string/operation_delete"
+            style="@style/FileViewOperationButtonStytle"
             android:drawableTop="@drawable/operation_button_delete"
-            style="@style/FileViewOperationButtonStytle" />
+            android:text="@string/operation_delete" />
+
         <TextView
             android:id="@+id/button_operation_copy"
+            style="@style/FileViewOperationButtonStytle"
             android:drawableTop="@drawable/operation_button_copy"
-            android:text="@string/operation_copy"
-            style="@style/FileViewOperationButtonStytle" />
+            android:text="@string/operation_copy" />
+
         <TextView
             android:id="@+id/button_operation_move"
+            style="@style/FileViewOperationButtonStytle"
             android:drawableTop="@drawable/operation_button_move"
-            android:text="@string/operation_move"
-            style="@style/FileViewOperationButtonStytle" />
+            android:text="@string/operation_move" />
+
         <TextView
             android:id="@+id/button_operation_send"
+            style="@style/FileViewOperationButtonStytle"
             android:drawableTop="@drawable/operation_button_send"
-            android:text="@string/operation_send"
-            style="@style/FileViewOperationButtonStytle" />
+            android:text="@string/operation_send" />
+
         <TextView
             android:id="@+id/button_operation_cancel"
+            style="@style/FileViewOperationButtonStytle"
             android:drawableTop="@drawable/operation_button_cancel"
-            android:text="@string/operation_cancel"
-            style="@style/FileViewOperationButtonStytle" />
+            android:text="@string/operation_cancel" />
     </LinearLayout>
 </LinearLayout>

@@ -6,7 +6,6 @@
     android:background="@color/white"
     android:orientation="vertical">
 
-
     <TextView
         android:id="@+id/tv_dia_pro_title"
         android:layout_width="match_parent"
