@@ -2,7 +2,7 @@
 <resources xmlns:android="http://schemas.android.com/apk/res/android" xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
 
     <string name="added_favorite">Added to Favorites</string>
-    <string name="app_name">File Explorer</string>
+    <string name="app_name">OneZeroFile Explorer</string>
     <string name="cancel">Cancel</string>
     <string name="category_all">All</string>
     <string name="category_apk">APKs</string>

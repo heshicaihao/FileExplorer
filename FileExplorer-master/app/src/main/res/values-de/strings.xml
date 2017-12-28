@@ -2,7 +2,7 @@
 <resources xmlns:android="http://schemas.android.com/apk/res/android" xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
 
     <string name="added_favorite">Zu Favoriten hinzugefügt</string>
-    <string name="app_name">Dateien</string>
+    <string name="app_name">EinNullDateien</string>
     <string name="cancel">Abbrechen</string>
     <string name="category_all">Alle</string>
     <string name="category_apk">APKs</string>
