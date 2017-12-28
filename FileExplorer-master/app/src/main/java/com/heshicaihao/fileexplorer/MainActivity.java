@@ -61,11 +61,8 @@ public class MainActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        LogUtils.d("onCreate前");
         setContentView(R.layout.activity_mian);
-
         setPermissions();
-        LogUtils.d("onCreate后");
     }
 
     private void setPermissions() {
@@ -85,7 +82,6 @@ public class MainActivity extends Activity {
     @PermissionGrant(REQUECT_CODE_SDCARD)
     public void requestSdcardSuccess() {
         initView();
-        initData();
         SharedData.setParam(MainActivity.this, "isPerm", true);
     }
 
@@ -110,12 +106,6 @@ public class MainActivity extends Activity {
         bar = getActionBar();
         bar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
         bar.setDisplayOptions(0, ActionBar.DISPLAY_SHOW_TITLE | ActionBar.DISPLAY_SHOW_HOME);
-
-
-
-    }
-
-    private void initData() {
         mTabsAdapter = new TabsAdapter(this, mViewPager);
         mTabsAdapter.addTab(bar.newTab().setText(R.string.tab_category),
                 FileCategoryFragment.class, null);
@@ -123,13 +113,12 @@ public class MainActivity extends Activity {
                 FileViewFragment.class, null);
         mTabsAdapter.addTab(bar.newTab().setText(R.string.tab_remote),
                 ServerControlFragment.class, null);
-//        String itemStr = (String)SharedData.getParam(MainActivity.this, INSTANCESTATE_TAB, "0");
-//        int item = Integer.parseInt(itemStr);
         int item  = (int)SharedData.getParam(MainActivity.this, INSTANCESTATE_TAB, 0);
         if (item==-1){
             item = 0;
         }
         bar.setSelectedNavigationItem(item);
+
     }
 
     @Override
