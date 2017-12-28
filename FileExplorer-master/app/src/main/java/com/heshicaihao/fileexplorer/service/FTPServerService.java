@@ -225,7 +225,7 @@ public class FTPServerService extends Service implements Runnable {
 
     private boolean loadSettings() {
         myLog.l(Log.DEBUG, "Loading settings");
-        settings = getSharedPreferences(Defaults.getSettingsName(), Defaults.getSettingsMode());
+        settings = getSharedPreferences(Defaults.getSettingsName(), Context.MODE_PRIVATE );
         port = settings.getInt("portNum", Defaults.portNumber);
         if (port == 0) {
             // If port number from settings is invalid, use the default
