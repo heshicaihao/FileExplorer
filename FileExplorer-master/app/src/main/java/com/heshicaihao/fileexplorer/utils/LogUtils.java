@@ -3,8 +3,6 @@ package com.heshicaihao.fileexplorer.utils;
 
 import android.util.Log;
 
-import com.google.gson.JsonObject;
-
 import org.json.JSONObject;
 
 /**
@@ -32,12 +30,6 @@ public class LogUtils {
                 msg = "";
             }
             Log.d(GLOBAL_TAG + "." + tag, msg);
-        }
-    }
-
-    public static void d(JsonObject content) {
-        if (sEnableLog) {
-            Log.d(GLOBAL_TAG + ".", content.toString());
         }
     }
 
