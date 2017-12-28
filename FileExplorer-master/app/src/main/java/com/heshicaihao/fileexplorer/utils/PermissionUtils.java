@@ -12,6 +12,7 @@ import android.provider.Settings;
 import android.view.View;
 import android.widget.Toast;
 
+import com.heshicaihao.fileexplorer.R;
 import com.heshicaihao.fileexplorer.common.SharedData;
 import com.heshicaihao.fileexplorer.widget.OldDialog;
 
@@ -37,7 +38,7 @@ public class PermissionUtils {
         OldDialog dialog = new OldDialog(mContext);
         dialog.builder();
         dialog.setTitle("权限设置");
-        dialog.setMsg("药就送权限不足" + "\n" + "确定去设置");
+        dialog.setMsg(mContext.getString(R.string.app_name)+"权限不足" + "\n" + "确定去设置");
         dialog.setPositiveButton("确定", new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
