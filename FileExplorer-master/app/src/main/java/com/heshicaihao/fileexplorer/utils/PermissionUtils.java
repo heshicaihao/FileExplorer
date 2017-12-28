@@ -29,87 +29,29 @@ import java.util.Map;
  * 创建时间： 2016/11/18 14:36
  */
 public class PermissionUtils {
-    final private int REQUEST_CODE_ASK_PERMISSIONS = 1;
-    private Context mContext;
-    private Activity mActivity;
-    private Boolean isHome;
+    public static Activity mActivity;
 
-    public PermissionUtils(Context mContext) {
-        this.mContext = mContext;
-        this.mActivity = (Activity)mContext;
-    }
+    public static void dealNoPermission(final Context mContext) {
+        mActivity = (Activity) mContext;
 
-    /**
-     * 权限查询功能
-     */
-    @TargetApi(Build.VERSION_CODES.M)
-    public void insertDummyContactWrapper(Boolean isHome) {
-        this.isHome = isHome;
-        List<String> permissionsNeeded = new ArrayList<>();
-        final List<String> permissionsList = new ArrayList<>();
-        if (!addPermission(permissionsList, Manifest.permission.WRITE_EXTERNAL_STORAGE))
-            permissionsNeeded.add("存储权限");
-
-        if (permissionsList.size() > 0) {
-            if (permissionsNeeded.size() > 0) {
-                mActivity.requestPermissions(permissionsList.toArray(new String[permissionsList.size()]), REQUEST_CODE_ASK_PERMISSIONS);
-                return;
+        OldDialog dialog = new OldDialog(mContext);
+        dialog.builder();
+        dialog.setTitle("权限设置");
+        dialog.setMsg("药就送权限不足" + "\n" + "确定去设置");
+        dialog.setPositiveButton("确定", new View.OnClickListener() {
+            @Override
+            public void onClick(View arg0) {
+                showInstalledAppDetails(mContext, mContext.getPackageName());
             }
-            mActivity.requestPermissions(permissionsList.toArray(new String[permissionsList.size()]), REQUEST_CODE_ASK_PERMISSIONS);
-            return;
-        }
-
-    }
-
-    @TargetApi(Build.VERSION_CODES.M)
-    private boolean addPermission(List<String> permissionsList, String permission) {
-        if (mContext.checkSelfPermission(permission) != PackageManager.PERMISSION_GRANTED) {
-            permissionsList.add(permission);
-            // Check for Rationale Option
-            if (!mActivity.shouldShowRequestPermissionRationale(permission)) return false;
-        }
-        return true;
-    }
-
-    public void onRequestPermissionsResult(
-            int requestCode, String[] permissions, int[] grantResults) {
-        switch (requestCode) {
-            case REQUEST_CODE_ASK_PERMISSIONS:
-                Map<String, Integer> perms = new HashMap<String, Integer>();
-                // Initial
-                perms.put(Manifest.permission.WRITE_EXTERNAL_STORAGE, PackageManager.PERMISSION_GRANTED);
-                perms.put(Manifest.permission.CAMERA, PackageManager.PERMISSION_GRANTED);
-                // Fill with results
-                for (int i = 0; i < permissions.length; i++)
-                    perms.put(permissions[i], grantResults[i]);
-                // Check for ACCESS_FINE_LOCATION
-                if (perms.get(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED  ) {
-                    SharedData.setParam(mContext, "isPerm", false);//当没有有权限被拒绝不需要重新授权
-                } else {//一些权限被拒绝
-                    SharedData.setParam(mContext, "isPerm", true);//当有权限被拒绝需要重新授权
-                    OldDialog dialog = new OldDialog(mContext);
-                    dialog.builder();
-                    dialog.setTitle("权限设置");
-                    dialog.setMsg("药就送权限不足" + "\n" + "确定去设置");
-                    dialog.setPositiveButton("确定", new View.OnClickListener() {
-                        @Override
-                        public void onClick(View arg0) {
-                            showInstalledAppDetails(mContext, "com.heshicaihao.fileexplorer");
-                        }
-                    });
-                    dialog.setNegativeButton("退出", new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            SharedData.setParam(mContext, "isPerm", false);
-                            System.exit(0);
-                        }
-                    });
-                    dialog.showDialog();
-
-                }
-                break;
-            default:
-        }
+        });
+        dialog.setNegativeButton("退出", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SharedData.setParam(mContext, "isPerm", false);
+                System.exit(0);
+            }
+        });
+        dialog.showDialog();
     }
 
 
@@ -138,7 +80,7 @@ public class PermissionUtils {
      * @param context
      * @param packageName 应用程序的包名
      */
-    public  void showInstalledAppDetails(Context context, String packageName) {
+    public static void showInstalledAppDetails(Context context, String packageName) {
         Intent intent = new Intent();
         final int apiLevel = Build.VERSION.SDK_INT;
         if (apiLevel >= 9) { // 2.3（ApiLevel 9）以上，使用SDK提供的接口

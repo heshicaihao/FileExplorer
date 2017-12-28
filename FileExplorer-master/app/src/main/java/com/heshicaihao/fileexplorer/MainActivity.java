@@ -19,19 +19,18 @@
 
 package com.heshicaihao.fileexplorer;
 
+import android.Manifest;
 import android.app.ActionBar;
 import android.app.ActionBar.Tab;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.content.res.Configuration;
-import android.os.Build;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.v13.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.ActionMode;
 
 import com.heshicaihao.fileexplorer.common.SharedData;
@@ -41,6 +40,9 @@ import com.heshicaihao.fileexplorer.fragment.ServerControlFragment;
 import com.heshicaihao.fileexplorer.utils.LogUtils;
 import com.heshicaihao.fileexplorer.utils.PermissionUtils;
 import com.heshicaihao.fileexplorer.utils.Util;
+import com.zhy.m.permission.MPermissions;
+import com.zhy.m.permission.PermissionDenied;
+import com.zhy.m.permission.PermissionGrant;
 
 import java.util.ArrayList;
 
@@ -53,33 +55,67 @@ public class MainActivity extends Activity {
     ViewPager mViewPager;
     TabsAdapter mTabsAdapter;
     ActionMode mActionMode;
-    private PermissionUtils mPermissionUtils;//权限控制
+    ActionBar bar;
+    public static final int REQUECT_CODE_SDCARD = 2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         LogUtils.d("onCreate前");
         setContentView(R.layout.activity_mian);
-        mPermissionUtils = new PermissionUtils(MainActivity.this);//权限控制
-        SharedData.setParam(MainActivity.this, "isPerm", false);//初始化权限是否全部授权判断
-        //判断使用APP的android版本是否是android6.0如果是android6.0则需要进行权限判断后再检查更新，是android6.0以下的版本则直接检查更新
-        int apiLevel = Build.VERSION.SDK_INT;
-        if (apiLevel < 23) {
-        } else {
-            mPermissionUtils.insertDummyContactWrapper(true);
-        }
-        initView();
+
+        setPermissions();
         LogUtils.d("onCreate后");
+    }
+
+    private void setPermissions() {
+        MPermissions.requestPermissions(MainActivity.this, REQUECT_CODE_SDCARD,
+                //sd卡获得写的权限
+                Manifest.permission.WRITE_EXTERNAL_STORAGE);
+
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        MPermissions.onRequestPermissionsResult(this, requestCode, permissions, grantResults);
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+    }
+
+
+    @PermissionGrant(REQUECT_CODE_SDCARD)
+    public void requestSdcardSuccess() {
+        initView();
+        initData();
+        SharedData.setParam(MainActivity.this, "isPerm", true);
+    }
+
+    @PermissionDenied(REQUECT_CODE_SDCARD)
+    public void requestSdcardFailed() {
+        PermissionUtils.dealNoPermission(MainActivity.this);
+
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        if (!(Boolean) SharedData.getParam(MainActivity.this, "isPerm", false)) {//在权限回调后检查
+            setPermissions();
+        }
     }
 
     private void initView() {
         mViewPager = (ViewPager) findViewById(R.id.pager);
         mViewPager.setOffscreenPageLimit(DEFAULT_OFFSCREEN_PAGES);
 
-        final ActionBar bar = getActionBar();
+        bar = getActionBar();
         bar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
         bar.setDisplayOptions(0, ActionBar.DISPLAY_SHOW_TITLE | ActionBar.DISPLAY_SHOW_HOME);
 
+
+
+    }
+
+    private void initData() {
         mTabsAdapter = new TabsAdapter(this, mViewPager);
         mTabsAdapter.addTab(bar.newTab().setText(R.string.tab_category),
                 FileCategoryFragment.class, null);
@@ -87,40 +123,20 @@ public class MainActivity extends Activity {
                 FileViewFragment.class, null);
         mTabsAdapter.addTab(bar.newTab().setText(R.string.tab_remote),
                 ServerControlFragment.class, null);
-        bar.setSelectedNavigationItem(PreferenceManager.getDefaultSharedPreferences(this)
-                .getInt(INSTANCESTATE_TAB, Util.CATEGORY_TAB_INDEX));
+//        String itemStr = (String)SharedData.getParam(MainActivity.this, INSTANCESTATE_TAB, "0");
+//        int item = Integer.parseInt(itemStr);
+        int item  = (int)SharedData.getParam(MainActivity.this, INSTANCESTATE_TAB, 0);
+        if (item==-1){
+            item = 0;
+        }
+        bar.setSelectedNavigationItem(item);
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        LogUtils.d("onPause前");
-        SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(this).edit();
-        editor.putInt(INSTANCESTATE_TAB, getActionBar().getSelectedNavigationIndex());
-        editor.commit();
-        LogUtils.d("onPause后");
+        SharedData.setParam(MainActivity.this, INSTANCESTATE_TAB, getActionBar().getSelectedNavigationIndex());
     }
-
-    @Override
-    public void onRequestPermissionsResult(
-            int requestCode, String[] permissions, int[] grantResults) {
-        //权限适配监听
-        mPermissionUtils.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        LogUtils.d("onRequestPermissionsResult");
-    }
-
-    @Override
-    protected void onRestart() {
-        super.onRestart();
-        LogUtils.d("onRestart前");
-        SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(this).edit();
-        editor.putInt(INSTANCESTATE_TAB, getActionBar().getSelectedNavigationIndex());
-        if ((Boolean) SharedData.getParam(MainActivity.this, "isPerm", false)) {//在权限回调后检查
-            mPermissionUtils.insertDummyContactWrapper(true);
-        }
-        LogUtils.d("onRestart后");
-    }
-
 
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
